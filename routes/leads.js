@@ -6,9 +6,12 @@ const prisma = new PrismaClient();
 // Add new lead
 router.post("/", async (req, res) => {
   try {
-    const { name, email, status = "NEW" } = req.body;
+    const { name, email } = req.body;
     const lead = await prisma.lead.create({
-      data: { name, email, status },
+      data: {
+        name,
+        email,
+      },
     });
     res.status(201).json(lead);
   } catch (err) {
