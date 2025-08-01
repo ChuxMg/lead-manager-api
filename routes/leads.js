@@ -29,4 +29,19 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Delete a lead
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    await prisma.lead.delete({
+      where: {
+        id: parseInt(id),
+      },
+    });
+    res.status(204).send();
+  } catch (err) {
+    res.status(404).json({ error: "Lead not found" });
+  }
+});
+
 module.exports = router;
