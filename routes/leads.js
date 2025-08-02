@@ -44,4 +44,25 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// Update a lead
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, email, status } = req.body;
+    const updatedLead = await prisma.lead.update({
+      where: {
+        id: parseInt(id),
+      },
+      data: {
+        name,
+        email,
+        status,
+      },
+    });
+    res.json(updatedLead);
+  } catch (err) {
+    res.status(404).json({ error: "Lead not found" });
+  }
+});
+
 module.exports = router;
